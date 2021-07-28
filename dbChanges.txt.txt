@@ -1,0 +1,70 @@
+23-7-2021----
+create table customers(
+   user_id INT NOT NULL AUTO_INCREMENT,
+   first_name VARCHAR(50) NOT NULL,
+   last_name VARCHAR(50) ,
+   email VARCHAR(50) NOT NULL,
+   created_at datetime,
+   updated_at DATETIME,
+   is_active tinyint(1),
+   customer_type tinyint,
+   PRIMARY KEY ( user_id )
+);
+
+create table invoices(
+invoice_id INT NOT NULL auto_increment,
+user_id INT NOT NULL,
+itme_type varchar(20) not null,
+rate decimal(8,2) not null,
+currency varchar(10) not null,
+price_per_unit varchar(20) not null,
+weight decimal(5,2) not null,
+weight_unit varchar(20) not null,
+actual_price decimal(10,2) not null,
+discount_percentage decimal(5,2),
+final_price decimal(10,2) not null,
+PRIMARY KEY ( invoice_id )
+);
+
+ALTER TABLE invoices 
+ADD CONSTRAINT fk_customer
+FOREIGN KEY (user_id) 
+REFERENCES customers(user_id);
+
+alter table invoices
+add created_at DATETIME,
+add updated_at datetime;
+
+24-7-2021----
+create table users_login_creds(
+   user_login_id INT NOT NULL auto_increment,
+   user_id INT NOT NULL,
+   user_name varchar(40) NOT NULL,
+   `password` varchar(200),
+   created_at DATETIME,
+   updated_at DATETIME,
+   PRIMARY KEY ( user_login_id )
+);
+
+ALTER TABLE users_login_creds 
+ADD CONSTRAINT fk_customer_login
+FOREIGN KEY (user_id) 
+REFERENCES customers(user_id);
+
+ALTER TABLE invoices
+add payment_status tinyint;
+
+create table rates(
+   rate_id INT NOT NULL auto_increment,
+   item_type varchar(20) not null,
+   rate decimal(8,2) not null,
+   unit varchar(20) not null,
+   currency varchar(10) not null,
+   created_at DATETIME,
+   updated_at DATETIME,
+   PRIMARY KEY ( rate_id )
+);
+
+25-7-2021
+ALTER TABLE rates 
+RENAME COLUMN rate TO rate_amount;
